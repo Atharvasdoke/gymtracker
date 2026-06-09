@@ -1,5 +1,3 @@
-export const USERS = ['Atharva', 'Aalok', 'Krish', 'Aarav'];
-
 export const SPLITS = {
   Push: [
     'Pec flys',

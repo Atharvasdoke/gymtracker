@@ -1,8 +1,18 @@
 import { useState, useEffect } from 'react';
 
 const STORAGE_KEY = 'gym_tracker_data';
+const USER_KEY = 'gym_tracker_user';
 
 export function useGymData() {
+  const [userName, setUserName] = useState(() => {
+    return window.localStorage.getItem(USER_KEY) || '';
+  });
+
+  const saveUserName = (name) => {
+    setUserName(name);
+    window.localStorage.setItem(USER_KEY, name);
+  };
+
   const [history, setHistory] = useState(() => {
     try {
       const item = window.localStorage.getItem(STORAGE_KEY);
@@ -33,5 +43,5 @@ export function useGymData() {
     }
   };
 
-  return { history, addWorkout };
+  return { history, addWorkout, userName, saveUserName };
 }
