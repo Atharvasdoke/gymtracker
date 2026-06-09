@@ -1,0 +1,49 @@
+export const USERS = ['Atharva', 'Aalok', 'Krish', 'Aarav'];
+
+export const SPLITS = {
+  Push: [
+    'Pec flys',
+    'Chest press',
+    'Shoulder press',
+    'Lateral raises',
+    'Triceps push down',
+    'Triceps over head',
+  ],
+  Pull: [
+    'Incline dumbbell rows',
+    'Lat pull-down',
+    'Reverse pec dec',
+    'Bicep curls',
+    'Hammer curls',
+    'Forearms',
+  ],
+  Leg: [
+    'Squats',
+    'Leg extension',
+    'Hamstring',
+    'Calf',
+    'Leg raises',
+    'Abs crunches',
+  ],
+  Rest: [],
+  Upper: [
+    'Chest press',
+    'Pec flys',
+    'Shoulder press',
+    'Lateral raises',
+    'Incline dumbbell rows',
+    'Lat pull-down',
+    'Abs crunches',
+    'Leg raises',
+  ],
+  Lower: [
+    'Squats',
+    'Leg extension',
+    'Hamstring curls',
+    'Calf raises',
+    'Bicep curls',
+    'Hammer curls',
+    'Tricep push down',
+    'Forearms',
+  ],
+};
