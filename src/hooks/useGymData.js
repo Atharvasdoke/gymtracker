@@ -3,7 +3,7 @@ import { SPLITS as defaultSplits } from '../data/splits';
 
 const STORAGE_KEY = 'gym_tracker_data';
 const USER_KEY = 'gym_tracker_user';
-const SPLITS_KEY = 'gym_tracker_splits';
+const SPLITS_KEY = 'gym_tracker_splits_v2';
 
 export function useGymData() {
   const [userName, setUserName] = useState(() => {
