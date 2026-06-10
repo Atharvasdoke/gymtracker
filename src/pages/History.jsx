@@ -39,12 +39,12 @@ export default function History() {
   }
 
   return (
-    <div className="space-y-6 animate-in slide-in-from-left-8 duration-300 pb-20">
-      <h1 className="text-2xl font-bold text-textMain sticky top-0 bg-background/80 backdrop-blur-md py-2 z-10">
+    <div className="space-y-6 animate-in slide-in-from-left-8 duration-500 pb-28 pt-4">
+      <h1 className="text-3xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/50 sticky top-0 bg-background/80 backdrop-blur-xl py-4 z-20 border-b border-white/5 shadow-sm">
         Activity Feed
       </h1>
 
-      <div className="space-y-4">
+      <div className="space-y-5">
         {history.map((workout) => {
           const date = new Date(workout.date).toLocaleDateString('en-US', {
             month: 'short',
@@ -56,39 +56,41 @@ export default function History() {
           return (
             <div
               key={workout.id}
-              className="bg-surface rounded-2xl p-5 shadow-sm border border-slate-700/50 space-y-3"
+              className="group bg-surface/30 backdrop-blur-sm rounded-3xl p-6 shadow-md border border-white/5 space-y-4 transition-all duration-300 hover:bg-surface/50 hover:border-white/10 hover:shadow-xl relative overflow-hidden"
             >
-              <div className="flex justify-between items-start border-b border-slate-700 pb-3">
+              <div className="absolute top-0 left-0 w-1 h-full bg-gradient-to-b from-primary to-primaryHover opacity-50 group-hover:opacity-100 transition-opacity" />
+              
+              <div className="flex justify-between items-start border-b border-white/5 pb-4">
                 <div>
-                  <h3 className="font-bold text-lg text-primary">{workout.user}</h3>
-                  <p className="text-sm text-textMuted">{date}</p>
+                  <h3 className="font-extrabold text-xl text-textMain/90 tracking-wide">{workout.user}</h3>
+                  <p className="text-xs font-medium text-textMuted uppercase tracking-widest mt-1">{date}</p>
                 </div>
-                <div className="flex flex-col items-end gap-2">
-                  <div className="bg-primary/10 text-primary px-3 py-1 rounded-full text-sm font-semibold">
+                <div className="flex flex-col items-end gap-3">
+                  <div className="bg-primary/10 border border-primary/20 text-primary px-4 py-1.5 rounded-full text-xs font-bold tracking-wide shadow-inner">
                     {workout.splitName}
                   </div>
                   <button 
                     onClick={() => handleCopy(workout, date)}
-                    className="flex items-center gap-1 text-xs text-textMuted hover:text-primary transition-colors bg-slate-800 px-2 py-1 rounded-md"
+                    className="flex items-center gap-1.5 text-xs font-semibold text-textMuted/80 hover:text-white transition-all bg-black/20 hover:bg-white/10 px-3 py-1.5 rounded-xl border border-transparent hover:border-white/10 active:scale-95"
                   >
-                    {copiedId === workout.id ? <Check size={14} /> : <Copy size={14} />}
-                    {copiedId === workout.id ? 'Copied!' : 'Copy'}
+                    {copiedId === workout.id ? <Check size={14} className="text-primary" /> : <Copy size={14} />}
+                    {copiedId === workout.id ? <span className="text-primary">Copied!</span> : 'Copy'}
                   </button>
                 </div>
               </div>
 
               {workout.splitName !== 'Rest' && workout.exercises?.length > 0 && (
-                <div className="space-y-4 pt-2">
+                <div className="space-y-3 pt-2">
                   {workout.exercises.map((ex, idx) => (
-                    <div key={idx} className="text-sm bg-slate-900/50 rounded-xl p-3 border border-slate-700/30">
-                      <div className="font-semibold text-textMain mb-2">{ex.name}</div>
-                      <div className="space-y-1 pl-2 border-l-2 border-slate-700/50">
+                    <div key={idx} className="bg-black/20 rounded-2xl p-4 border border-white/5 hover:border-white/10 transition-colors">
+                      <div className="font-bold text-sm text-textMain/90 mb-3 tracking-wide">{ex.name}</div>
+                      <div className="space-y-2 pl-3 border-l-2 border-primary/30">
                         {ex.sets.map((set, sIdx) => (
-                          <div key={sIdx} className="text-textMuted flex gap-2">
-                            <span className="w-12">Set {sIdx + 1}:</span>
-                            <span className="text-textMain font-medium">{set.weight || '0'}</span>
-                            <span>×</span>
-                            <span className="text-textMain font-medium">{set.reps || '0'}</span>
+                          <div key={sIdx} className="text-xs flex gap-3 items-center">
+                            <span className="w-12 text-textMuted/70 font-bold uppercase tracking-wider">S {sIdx + 1}</span>
+                            <span className="text-textMain font-semibold bg-white/5 px-2 py-0.5 rounded-md">{set.weight || '0'}</span>
+                            <span className="text-textMuted/50 font-light">×</span>
+                            <span className="text-textMain font-semibold bg-white/5 px-2 py-0.5 rounded-md">{set.reps || '0'}</span>
                           </div>
                         ))}
                       </div>

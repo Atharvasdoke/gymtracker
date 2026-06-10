@@ -6,13 +6,16 @@ export default {
   ],
   theme: {
     extend: {
+      fontFamily: {
+        sans: ['Outfit', 'sans-serif'],
+      },
       colors: {
-        background: '#0f172a', // slate-900
-        surface: '#1e293b', // slate-800
-        primary: '#3b82f6', // blue-500
-        primaryHover: '#2563eb', // blue-600
-        textMain: '#f8fafc', // slate-50
-        textMuted: '#94a3b8', // slate-400
+        background: '#09090b', // zinc-950
+        surface: '#18181b', // zinc-900
+        primary: '#06b6d4', // cyan-500
+        primaryHover: '#0891b2', // cyan-600
+        textMain: '#fafafa', // zinc-50
+        textMuted: '#a1a1aa', // zinc-400
       }
     },
   },

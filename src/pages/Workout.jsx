@@ -72,15 +72,15 @@ export default function Workout() {
   };
 
   return (
-    <div className="space-y-6 animate-in slide-in-from-right-8 duration-300 pb-20">
-      <div className="flex justify-between items-center bg-surface p-4 rounded-2xl shadow-sm border border-slate-700/50">
+    <div className="space-y-6 animate-in slide-in-from-right-8 duration-500 pb-28 pt-4">
+      <div className="sticky top-4 z-20 flex justify-between items-center bg-surface/60 backdrop-blur-xl p-5 rounded-3xl shadow-lg border border-white/10">
         <div>
-          <h2 className="text-xl font-bold text-primary">{splitName} Day</h2>
-          <p className="text-sm text-textMuted">Logging for {user}</p>
+          <h2 className="text-2xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-primary to-primaryHover tracking-tight">{splitName} Day</h2>
+          <p className="text-xs font-medium text-textMuted uppercase tracking-widest mt-1">Logging for {user}</p>
         </div>
         <button
           onClick={handleSaveWorkout}
-          className="flex items-center gap-2 bg-primary hover:bg-primaryHover text-white px-4 py-2 rounded-xl font-medium transition-colors"
+          className="flex items-center gap-2 bg-primary hover:bg-primaryHover text-white px-5 py-3 rounded-2xl font-semibold transition-all shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] active:scale-95"
         >
           <Save size={18} />
           Save
@@ -89,62 +89,66 @@ export default function Workout() {
 
       <div className="space-y-6">
         {exercises.map((ex) => (
-          <div key={ex.id} className="bg-surface p-4 rounded-2xl shadow-sm border border-slate-700/50 space-y-4">
-            <h3 className="font-semibold text-lg text-textMain">{ex.name}</h3>
+          <div key={ex.id} className="relative group bg-surface/30 backdrop-blur-sm p-6 rounded-3xl shadow-md border border-white/5 space-y-5 transition-all duration-300 hover:bg-surface/50 hover:border-white/10 hover:shadow-xl">
+            <h3 className="font-bold text-xl text-textMain/90 tracking-wide">{ex.name}</h3>
             
-            <div className="space-y-2">
+            <div className="space-y-3">
               {ex.sets.map((set, idx) => (
-                <div key={idx} className="flex items-center gap-2">
-                  <span className="w-6 text-sm text-textMuted font-medium">{idx + 1}</span>
-                  <input
-                    type="number"
-                    placeholder="kg/lbs"
-                    value={set.weight}
-                    onChange={(e) => updateSet(ex.id, idx, 'weight', e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-primary text-textMain placeholder-slate-500"
-                  />
-                  <span className="text-textMuted">x</span>
-                  <input
-                    type="number"
-                    placeholder="reps"
-                    value={set.reps}
-                    onChange={(e) => updateSet(ex.id, idx, 'reps', e.target.value)}
-                    className="w-full bg-slate-900 border border-slate-700 rounded-lg p-2 text-sm focus:outline-none focus:border-primary text-textMain placeholder-slate-500"
-                  />
+                <div key={idx} className="flex items-center gap-3">
+                  <span className="w-8 text-xs text-textMuted/70 font-bold uppercase tracking-wider">S {idx + 1}</span>
+                  <div className="flex-1 relative">
+                    <input
+                      type="number"
+                      placeholder="kg/lbs"
+                      value={set.weight}
+                      onChange={(e) => updateSet(ex.id, idx, 'weight', e.target.value)}
+                      className="w-full bg-black/20 border-b-2 border-transparent focus:border-primary rounded-xl p-3 text-sm focus:outline-none text-textMain placeholder-textMuted/50 transition-all font-medium"
+                    />
+                  </div>
+                  <span className="text-textMuted/50 font-light">×</span>
+                  <div className="flex-1 relative">
+                    <input
+                      type="number"
+                      placeholder="reps"
+                      value={set.reps}
+                      onChange={(e) => updateSet(ex.id, idx, 'reps', e.target.value)}
+                      className="w-full bg-black/20 border-b-2 border-transparent focus:border-primary rounded-xl p-3 text-sm focus:outline-none text-textMain placeholder-textMuted/50 transition-all font-medium"
+                    />
+                  </div>
                 </div>
               ))}
             </div>
 
             <button
               onClick={() => addSet(ex.id)}
-              className="flex items-center gap-2 text-sm text-primary hover:text-primaryHover font-medium py-1 transition-colors"
+              className="flex items-center justify-center w-full gap-2 text-sm text-primary/80 hover:text-primary hover:bg-primary/10 font-bold py-3 rounded-xl transition-all border border-transparent hover:border-primary/20"
             >
-              <Plus size={16} /> Add Set
+              <Plus size={18} /> Add Set
             </button>
           </div>
         ))}
 
         {/* Add Custom Exercise */}
         {showAddExercise ? (
-          <div className="bg-surface p-4 rounded-2xl border border-primary/50 space-y-3">
+          <div className="bg-surface/50 backdrop-blur-md p-6 rounded-3xl border border-primary/30 shadow-[0_0_20px_rgba(6,182,212,0.1)] space-y-4 animate-in zoom-in-95 duration-200">
             <input
               type="text"
               placeholder="Exercise name..."
               value={newExerciseName}
               onChange={(e) => setNewExerciseName(e.target.value)}
-              className="w-full bg-slate-900 border border-slate-700 rounded-lg p-3 focus:outline-none focus:border-primary text-textMain"
+              className="w-full bg-black/30 border border-white/10 rounded-2xl p-4 focus:outline-none focus:border-primary/50 focus:ring-1 focus:ring-primary/50 text-textMain transition-all shadow-inner font-medium"
               autoFocus
             />
-            <div className="flex gap-2">
+            <div className="flex gap-3">
               <button
                 onClick={handleAddExercise}
-                className="flex-1 bg-primary text-white py-2 rounded-lg font-medium"
+                className="flex-1 bg-primary text-white py-3 rounded-2xl font-bold shadow-[0_0_15px_rgba(6,182,212,0.3)] hover:shadow-[0_0_25px_rgba(6,182,212,0.5)] transition-all active:scale-95"
               >
                 Add
               </button>
               <button
                 onClick={() => setShowAddExercise(false)}
-                className="flex-1 bg-slate-700 text-textMain py-2 rounded-lg font-medium"
+                className="flex-1 bg-white/5 text-textMain py-3 rounded-2xl font-bold hover:bg-white/10 border border-white/5 hover:border-white/10 transition-all active:scale-95"
               >
                 Cancel
               </button>
@@ -153,9 +157,9 @@ export default function Workout() {
         ) : (
           <button
             onClick={() => setShowAddExercise(true)}
-            className="w-full py-4 border-2 border-dashed border-slate-700 rounded-2xl text-textMuted hover:text-primary hover:border-primary hover:bg-primary/5 transition-all flex items-center justify-center gap-2 font-medium"
+            className="w-full py-6 border-2 border-dashed border-white/10 rounded-3xl text-textMuted/70 hover:text-primary hover:border-primary/50 hover:bg-primary/5 transition-all flex items-center justify-center gap-2 font-bold tracking-wide shadow-sm"
           >
-            <Plus size={20} /> Add Custom Exercise
+            <Plus size={22} /> Add Custom Exercise
           </button>
         )}
       </div>
