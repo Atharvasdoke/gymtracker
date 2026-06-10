@@ -6,7 +6,7 @@ import { useGymData } from '../hooks/useGymData';
 export default function Workout() {
   const location = useLocation();
   const navigate = useNavigate();
-  const { addWorkout } = useGymData();
+  const { addWorkout, addExerciseToSplit } = useGymData();
 
   if (!location.state) {
     return <Navigate to="/" />;
@@ -49,10 +49,12 @@ export default function Workout() {
 
   const handleAddExercise = () => {
     if (!newExerciseName.trim()) return;
+    const name = newExerciseName.trim();
     setExercises((prev) => [
       ...prev,
-      { id: Date.now(), name: newExerciseName.trim(), sets: [] },
+      { id: Date.now(), name, sets: [] },
     ]);
+    addExerciseToSplit(splitName, name);
     setNewExerciseName('');
     setShowAddExercise(false);
   };

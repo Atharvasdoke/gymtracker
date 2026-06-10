@@ -1,7 +1,9 @@
 import { useState, useEffect } from 'react';
+import { SPLITS as defaultSplits } from '../data/splits';
 
 const STORAGE_KEY = 'gym_tracker_data';
 const USER_KEY = 'gym_tracker_user';
+const SPLITS_KEY = 'gym_tracker_splits';
 
 export function useGymData() {
   const [userName, setUserName] = useState(() => {
@@ -31,6 +33,24 @@ export function useGymData() {
     }
   }, [history]);
 
+  const [splits, setSplits] = useState(() => {
+    try {
+      const item = window.localStorage.getItem(SPLITS_KEY);
+      return item ? JSON.parse(item) : defaultSplits;
+    } catch (error) {
+      console.error(error);
+      return defaultSplits;
+    }
+  });
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(SPLITS_KEY, JSON.stringify(splits));
+    } catch (error) {
+      console.error(error);
+    }
+  }, [splits]);
+
   const addWorkout = (workout) => {
     try {
       const item = window.localStorage.getItem(STORAGE_KEY);
@@ -43,5 +63,16 @@ export function useGymData() {
     }
   };
 
-  return { history, addWorkout, userName, saveUserName };
+  const addExerciseToSplit = (splitName, exerciseName) => {
+    setSplits(prev => {
+      const currentExercises = prev[splitName] || [];
+      if (currentExercises.includes(exerciseName)) return prev;
+      return {
+        ...prev,
+        [splitName]: [...currentExercises, exerciseName]
+      };
+    });
+  };
+
+  return { history, addWorkout, userName, saveUserName, splits, addExerciseToSplit };
 }

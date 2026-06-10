@@ -1,12 +1,11 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Edit2, Check } from 'lucide-react';
-import { SPLITS } from '../data/splits';
 import { useGymData } from '../hooks/useGymData';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { userName, saveUserName } = useGymData();
+  const { userName, saveUserName, splits } = useGymData();
   const [isEditingName, setIsEditingName] = useState(!userName);
   const [tempName, setTempName] = useState(userName);
   
@@ -16,7 +15,7 @@ export default function Dashboard() {
       setIsEditingName(true);
       return;
     }
-    navigate('/workout', { state: { user: userName, splitName, exercises: SPLITS[splitName] } });
+    navigate('/workout', { state: { user: userName, splitName, exercises: splits[splitName] } });
   };
 
   const handleSaveName = () => {
@@ -78,7 +77,7 @@ export default function Dashboard() {
 
       {/* Split Selection */}
       <div className="grid grid-cols-2 gap-4">
-        {Object.keys(SPLITS).map((splitName) => (
+        {Object.keys(splits).map((splitName) => (
           <button
             key={splitName}
             onClick={() => handleStartWorkout(splitName)}
