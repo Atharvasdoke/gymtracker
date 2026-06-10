@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Edit2, Check } from 'lucide-react';
+import { Edit2, Check, Trash2, AlertTriangle } from 'lucide-react';
 import { useGymData } from '../hooks/useGymData';
 
 export default function Dashboard() {
   const navigate = useNavigate();
-  const { userName, saveUserName, splits } = useGymData();
+  const { userName, saveUserName, splits, clearAllData } = useGymData();
   const [isEditingName, setIsEditingName] = useState(!userName);
   const [tempName, setTempName] = useState(userName);
+  const [showClearWarning, setShowClearWarning] = useState(false);
   
   const handleStartWorkout = (splitName) => {
     if (!userName) {
@@ -25,6 +26,13 @@ export default function Dashboard() {
     }
   };
 
+  const handleClearData = () => {
+    clearAllData();
+    setShowClearWarning(false);
+    setIsEditingName(true);
+    setTempName('');
+  };
+
   const today = new Date().toLocaleDateString('en-US', {
     weekday: 'long',
     month: 'long',
@@ -32,7 +40,7 @@ export default function Dashboard() {
   });
 
   return (
-    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700">
+    <div className="space-y-8 animate-in fade-in slide-in-from-bottom-4 duration-700 pb-8">
       <div className="text-center space-y-3 mt-4">
         <h1 className="text-4xl font-extrabold tracking-tight text-transparent bg-clip-text bg-gradient-to-br from-white to-white/50 drop-shadow-sm">{today}</h1>
         <p className="text-primary font-medium tracking-wide">What are you training today?</p>
@@ -101,6 +109,47 @@ export default function Dashboard() {
           </button>
         ))}
       </div>
+
+      {/* Clear Data Button */}
+      <div className="flex justify-center pt-6">
+        <button
+          onClick={() => setShowClearWarning(true)}
+          className="flex items-center gap-2 text-xs font-semibold text-textMuted hover:text-red-400 transition-colors px-4 py-2 rounded-full bg-surface/20 border border-white/5 hover:border-red-500/30 hover:bg-red-500/10"
+        >
+          <Trash2 size={14} /> Clear All Data
+        </button>
+      </div>
+
+      {/* Warning Modal */}
+      {showClearWarning && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm animate-in fade-in duration-200">
+          <div className="bg-surface border border-white/10 rounded-3xl p-6 w-full max-w-sm shadow-2xl space-y-5 animate-in zoom-in-95 duration-200">
+            <div className="flex flex-col items-center text-center space-y-3">
+              <div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center text-red-500 mb-2">
+                <AlertTriangle size={32} />
+              </div>
+              <h3 className="text-xl font-extrabold text-white">Clear All Data?</h3>
+              <p className="text-textMuted text-sm leading-relaxed">
+                This will permanently delete your username, custom splits, and all your workout history. This action cannot be undone.
+              </p>
+            </div>
+            <div className="flex gap-3 pt-2">
+              <button
+                onClick={() => setShowClearWarning(false)}
+                className="flex-1 bg-white/5 hover:bg-white/10 text-white font-bold py-3 rounded-2xl transition-all border border-white/5 hover:border-white/10 active:scale-95"
+              >
+                Cancel
+              </button>
+              <button
+                onClick={handleClearData}
+                className="flex-1 bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-2xl transition-all shadow-[0_0_15px_rgba(239,68,68,0.3)] hover:shadow-[0_0_25px_rgba(239,68,68,0.5)] active:scale-95"
+              >
+                Yes, Clear It
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

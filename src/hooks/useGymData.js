@@ -74,5 +74,14 @@ export function useGymData() {
     });
   };
 
-  return { history, addWorkout, userName, saveUserName, splits, addExerciseToSplit };
+  const clearAllData = () => {
+    window.localStorage.removeItem(USER_KEY);
+    window.localStorage.removeItem(STORAGE_KEY);
+    window.localStorage.removeItem(SPLITS_KEY);
+    setUserName('');
+    setHistory([]);
+    setSplits(defaultSplits);
+  };
+
+  return { history, addWorkout, userName, saveUserName, splits, addExerciseToSplit, clearAllData };
 }
